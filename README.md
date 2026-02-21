@@ -14,7 +14,7 @@ A lightweight, basic web application to explore data from the Hospital Managemen
 1. **Environment Configuration**: Create a `.env` file in the root directory and add your API URL:
 
    ```env
-   API_URL=http://hms-api.us-east-1.elasticbeanstalk.com/
+   API_URL=YOUR API URL
    ```
 
 2. **Open the Application**: Open the `index.html` file in any modern web browser.
