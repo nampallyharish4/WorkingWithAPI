@@ -8,12 +8,23 @@ async function getApiUrl() {
     const lines = text.split('\n');
     for (let i = 0; i < lines.length; i = i + 1) {
       if (lines[i].indexOf('API_URL=') !== -1) {
-        return lines[i].split('=')[1].trim();
+        let url = lines[i].split('=')[1].trim();
+        // If on HTTPS (Netlify) but URL is HTTP, use the proxy
+        if (
+          window.location.protocol === 'https:' &&
+          url.indexOf('http://') === 0
+        ) {
+          return '/api/';
+        }
+        return url;
       }
     }
     throw new Error('API_URL not found');
   } catch (err) {
-    // Fallback URL if .env is missing or blocked
+    // Fallback logic for Netlify vs Local
+    if (window.location.protocol === 'https:') {
+      return '/api/'; // Uses the proxy defined in _redirects
+    }
     return 'http://hms-api.us-east-1.elasticbeanstalk.com/';
   }
 }
