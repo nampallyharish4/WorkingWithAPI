@@ -1,13 +1,31 @@
 const dataContainer = document.getElementById('data');
 
+async function getApiUrl() {
+  try {
+    const response = await fetch('.env');
+    if (!response.ok) throw new Error();
+    const text = await response.text();
+    const lines = text.split('\n');
+    for (let i = 0; i < lines.length; i = i + 1) {
+      if (lines[i].indexOf('API_URL=') !== -1) {
+        return lines[i].split('=')[1].trim();
+      }
+    }
+    throw new Error('API_URL not found');
+  } catch (err) {
+    // Fallback URL if .env is missing or blocked
+    return 'http://hms-api.us-east-1.elasticbeanstalk.com/';
+  }
+}
+
 async function fetchTable(tableName) {
   document.getElementById('tableTitle').innerText =
     tableName.charAt(0).toUpperCase() + tableName.slice(1);
 
-  const apiUrl = 'http://hms-api.us-east-1.elasticbeanstalk.com/';
-  const fullUrl = apiUrl + tableName;
-
   try {
+    const apiUrl = await getApiUrl();
+    const fullUrl = apiUrl + tableName;
+
     const response = await fetch(fullUrl, {
       headers: {
         Accept: 'application/json',
