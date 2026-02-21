@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HMS Data Explorer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>HMS Data Explorer</h1>
+
+    <div class="button-group">
+      <button onclick="fetchTable('visits')">Fetch Visits</button>
+      <button onclick="fetchTable('patients')">Fetch Patients</button>
+      <button onclick="fetchTable('doctors')">Fetch Doctors</button>
+    </div>
+
+    <h2 id="tableTitle" style="text-align: center">Select a table</h2>
+    <div id="data"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
